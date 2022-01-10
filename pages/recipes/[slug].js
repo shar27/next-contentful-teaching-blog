@@ -27,7 +27,7 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params }) => {
   const { items } = await client.getEntries({
-    content_type: 'post',
+    content_type: 'posts',
     'fields.slug': params.slug
   }) 
 
@@ -49,7 +49,7 @@ export const getStaticProps = async ({ params }) => {
 export default function RecipeDetails({ post }) {
   if (!post) return <Skeleton />
 
-  const { featuredImage, title, method } = post.fields
+  const { featuredImage, title, information } = post.fields
 
   return (
     <div>
@@ -62,18 +62,11 @@ export default function RecipeDetails({ post }) {
         <h2>{ title }</h2>
       </div>
 
-      <div className="info">
-        
-        <h3>Ingredients:</h3>
-
-        {ingredients.map(ing => (
-          <span key={ing}>{ ing }</span>
-        ))}
-      </div>
+     
         
       <div className="method">
         <h3>Method:</h3>
-        <div>{documentToReactComponents(method)}</div>
+        <div>{documentToReactComponents(information)}</div>
       </div>
 
       <style jsx>{`
